@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customLabels>
+        <name>Review_Screen_Title</name>
+        <label>予約確認画面</label>
+    </customLabels>
+    <customLabels>
+        <name>Review_Screen_Header</name>
+        <label>予約情報詳細</label>
+    </customLabels>
+    <customLabels>
+        <name>Address_Column_Name</name>
+        <label>住所</label>
+    </customLabels>
+</Translations>

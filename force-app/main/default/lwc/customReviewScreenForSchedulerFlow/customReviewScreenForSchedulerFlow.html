@@ -1,0 +1,51 @@
+<template>
+    <div class="slds-text-heading_large slds-text-align_center slds-m-vertical_small slds-text-color_default">
+        <h2>{LABELS.reviewScreenTitle}</h2>
+    </div>
+    <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_xx-small slds-text-color_default">
+        <span class="section-header-title slds-p-horizontal--small slds-truncate">{LABELS.reviewScreenHeader}</span>
+    </h3>
+    <div class="slds-form slds-form_stacked">
+        <div class="slds-grid slds-wrap slds-gutters slds-p-horizontal_x-small slds-m-top_xx-small">
+            <template for:each={items} for:item="item">
+                <div key={item.apiName} class="slds-col slds-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">{item.name}</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{item.value}</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <div class="slds-col slds-size_1-of-2 slds-m-bottom_medium">
+                <div class="slds-form-element slds-form-element_readonly">
+                    <span class="slds-form-element__label">{LABELS.addressColumnName}</span>
+                    <div if:true={showMap} class="slds-form-element__control">
+                        <span class="slds-form-element__static">
+                            <lightning-formatted-address
+                                street={street}
+                                city={city}
+                                province={state}
+                                postal-code={postalCode}
+                                country={country}
+                                show-static-map>
+                            </lightning-formatted-address>
+                        </span>
+                    </div>
+                    <div if:false={showMap} class="slds-form-element__control">
+                        <span class="slds-form-element__static">
+                            <lightning-formatted-address
+                                street={street}
+                                city={city}
+                                province={state}
+                                postal-code={postalCode}
+                                country={country}
+                                show-static-map>
+                            </lightning-formatted-address>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
