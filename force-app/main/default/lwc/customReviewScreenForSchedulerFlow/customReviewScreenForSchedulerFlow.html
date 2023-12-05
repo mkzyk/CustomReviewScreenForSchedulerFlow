@@ -20,7 +20,7 @@
             <div class="slds-col slds-size_1-of-2 slds-m-bottom_medium">
                 <div class="slds-form-element slds-form-element_readonly">
                     <span class="slds-form-element__label">{LABELS.addressColumnName}</span>
-                    <div if:true={showMap} class="slds-form-element__control">
+                    <div if:true={isShowingMap} class="slds-form-element__control">
                         <span class="slds-form-element__static">
                             <lightning-formatted-address
                                 street={street}
@@ -32,15 +32,14 @@
                             </lightning-formatted-address>
                         </span>
                     </div>
-                    <div if:false={showMap} class="slds-form-element__control">
+                    <div if:false={isShowingMap} class="slds-form-element__control">
                         <span class="slds-form-element__static">
                             <lightning-formatted-address
                                 street={street}
                                 city={city}
                                 province={state}
                                 postal-code={postalCode}
-                                country={country}
-                                show-static-map>
+                                country={country}>
                             </lightning-formatted-address>
                         </span>
                     </div>

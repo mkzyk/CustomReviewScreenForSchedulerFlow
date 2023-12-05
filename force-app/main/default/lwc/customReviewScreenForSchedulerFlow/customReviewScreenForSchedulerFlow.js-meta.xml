@@ -9,11 +9,11 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="serviceAppointmentRecord" label="Service Appointment Record" type="@salesforce/schema/ServiceAppointment" role="inputOnly" description="Set your ServiceAppointment record variable from Flow"/>
-            <property name="excludedFields" label="Excluded Fields" type="String" role="inputOnly" default="Comments,AdditionalInformation,IsAnonymousBooking,EngagementChannelTypeId" description="Excluded Field for Review Screen. Input API name separated comma with no space"/>
-            <property name="workTypeGroupId" label="Work Type Group Id" type="String" role="inputOnly" description="Set {!serviceResources}, Leave Blank If you don't need to display Work Type Group Name"/>
-            <property name="serviceResourceIds" label="Service Resource Ids" type="String" role="inputOnly" description="set {!workTypeGroupId}, Leave Blank If you don't need to display Service Resources Name"/>
-            <property name="showMap" label="Show Map" type="Boolean" role="inputOnly" default="false" description="Show map by address"/>
+            <property name="serviceAppointmentRecord" label="Service Appointment Record" type="@salesforce/schema/ServiceAppointment" role="inputOnly" description="Set {!ServiceAppointment} variable from Flow"/>
+            <property name="excludedFields" label="Excluded Fields" type="String" role="inputOnly" description="Excluded Field for Review Screen. Input API name separated comma with no space i.e. Comments,AdditionalInformation,IsAnonymousBooking,EngagementChannelTypeId"/>
+            <property name="workTypeGroupId" label="Work Type Group Id" type="String" role="inputOnly" description="Set {!workTypeGroupId}, Leave Blank If you don't need to display Work Type Group Name"/>
+            <property name="serviceResourceIds" label="Service Resource Ids" type="String" role="inputOnly" description="Set {!serviceResources}, Leave Blank If you don't need to display Service Resources Name"/>
+            <property name="showMap" label="Show Map" type="Boolean" role="inputOnly" description="Show map by address. Set {!$GlobalConstant.True} or false. Deafault is false."/>
             <property name="outputJson" label="Output JSON" type="String" role="outputOnly" />
         </targetConfig>
     </targetConfigs>

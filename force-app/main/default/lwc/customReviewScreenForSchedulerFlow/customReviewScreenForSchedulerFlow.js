@@ -5,6 +5,11 @@ import TIME_ZONE from '@salesforce/i18n/timeZone';
 import LANG from '@salesforce/i18n/lang';
 import customLabels from './labels';
 
+// use Regex to check UTC Date format
+const DATE_PATTERN_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
+// use Regex to check ID type data
+const ID_TYPE_REGEX = /^(?=.*[a-zA-Z])[a-zA-Z0-9]{15}$|^(?=.*[a-zA-Z])[a-zA-Z0-9]{18}$/;
+
 export default class CustomReviewScreenForSchedulerFlow extends LightningElement {
     @api serviceAppointmentRecord;
     @api excludedFields;
@@ -15,9 +20,9 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
     @track items = [];
     @track workTypeGroupLabel;
     fieldApiNames = [];
+    excludedFieldsArr = [];
+
     LABELS = customLabels;
-    // use Regex to check UTC Date format
-    datePattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
 
     get street() {
         return this.serviceAppointmentRecord['Street'];
@@ -34,26 +39,34 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
     get country() {
         return this.serviceAppointmentRecord['Country'];
     }
+    get isShowingMap() {
+        return typeof this.showMap === 'undefined' ? false : this.showMap;
+    }
 
     connectedCallback() {
         console.log('Input Service Appointment : ' + JSON.stringify(this.serviceAppointmentRecord));
         
-        let excludedFieldsArr = this.excludedFields.split(',');
-        console.log('Input Excluded Fields : ' + excludedFieldsArr);
-        
+        if(typeof(this.excludedFields) !== 'undefined') {
+            this.excludedFieldsArr = this.excludedFields.split(',');
+            console.log('Input Excluded Fields : ' + this.excludedFieldsArr);
+        }
+
         // Exclude Address fields for displaying
-        excludedFieldsArr.push('Street', 'City', 'State', 'PostalCode', 'Country');
+        this.excludedFieldsArr.push('Street', 'City', 'State', 'PostalCode', 'Country');
+
+        // Unnecessary Field for Output
+        this.excludedFieldsArr.push('EngagementChannelTypeId');
 
         for(let key in this.serviceAppointmentRecord) {
             // Exclude the fields specified from a flow
-            if(!excludedFieldsArr.includes(key)) {
+            if(!this.excludedFieldsArr.includes(key)) {
                 let value = this.serviceAppointmentRecord[key];
-                // If ApiName has an Id, get a value by RecordId
-                if (key.includes('Id')) {
+                // If value is ID type data, get a value by RecordId
+                if (this.checkValueIsIdType(value)) {
                     this.getRecordNameByRecordId(key, value);
                 } else {
                     // If value is DateTime, convert it to fomatted date time
-                    if (this.datePattern.test(value) & !isNaN(Date.parse(value))) {
+                    if (DATE_PATTERN_REGEX.test(value) & !isNaN(Date.parse(value))) {
                         value = this.formatUTCDateTime(value);
                     }
                     this.items.push({apiName: key, value: value, name: ''});
@@ -67,14 +80,18 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
 
     // Get the field labels
     async updateFieldLabels(objectApiName) {
-        const result = await getFieldLabels({ objectApiName: objectApiName, fieldApiNames: this.fieldApiNames });
-        console.log('result - ' + JSON.stringify(result));
-        for (let item of this.items) {
-            if(item.name === '') {
-                item.name = result[item.apiName];
+        try {
+            const result = await getFieldLabels({ objectApiName: objectApiName, fieldApiNames: this.fieldApiNames });
+            console.log('result - ' + JSON.stringify(result));
+            for (let item of this.items) {
+                if(item.name === '') {
+                    item.name = result[item.apiName];
+                }
             }
+            console.log('this item - ' + JSON.stringify(this.items));
+        } catch(e) {
+            console.error(e);
         }
-        console.log('this item - ' + JSON.stringify(this.items));
     }
 
     // Get Record Name by recordId
@@ -88,6 +105,10 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         } catch(e) {
             console.error(e);
         }
+    }
+
+    checkValueIsIdType(value) {
+        return ID_TYPE_REGEX.test(value);
     }
 
     formatUTCDateTime(value) {
