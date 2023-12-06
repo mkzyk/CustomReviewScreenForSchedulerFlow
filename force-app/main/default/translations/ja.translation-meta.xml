@@ -12,4 +12,8 @@
         <name>Address_Column_Name</name>
         <label>住所</label>
     </customLabels>
+    <customLabels>
+        <name>Review_Screen_SchedTime_Header</name>
+        <label>予定時間</label>
+    </customLabels>
 </Translations>

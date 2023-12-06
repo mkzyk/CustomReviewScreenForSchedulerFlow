@@ -24,4 +24,12 @@
         <shortDescription>Address Column Name</shortDescription>
         <value>Address</value>
     </labels>
+    <labels>
+        <fullName>Review_Screen_SchedTime_Header</fullName>
+        <categories>customReviewScreenForSchedulerFlow</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Review Screen SchedTime Header</shortDescription>
+        <value>Your Scheduled Time</value>
+    </labels>
 </CustomLabels>

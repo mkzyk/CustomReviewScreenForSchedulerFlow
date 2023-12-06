@@ -1,10 +1,16 @@
-// Use .apex files to store anonymous Apex.
-// You can execute anonymous Apex in VS Code by selecting the
-//     apex text and running the command:
-//     SFDX: Execute Anonymous Apex with Currently Selected Text
-// You can also execute the entire file by running the command:
-//     SFDX: Execute Anonymous Apex with Editor Contents
+Id recordId = '0015j00001TOdnoAAD';
+String objectName = recordId.getSObjectType().getDescribe().getName();
+System.debug(objectName);
+Schema.DescribeSObjectResult dsr = Schema.getGlobalDescribe().get(objectName).getDescribe();
+System.debug(dsr);
 
-string tempvar = 'Enter_your_name_here';
-System.debug('Hello World!');
-System.debug('My name is ' + tempvar);
+String tmp = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap().get('Name').getDescribe().getLabel();
+System.debug(tmp);
+
+//String label = Schema.getGlobalDescribe().get(objectName).fields.getMap().get('Name').getDescribe().getLabel();
+
+//String label = Schema.getGlobalDescribe().get(objectName).fields.getMap().get('Name').getDescribe().getLabel();
+System.debug(label);
+
+String obj = 'Account';
+SELECT Id FROM :=obj

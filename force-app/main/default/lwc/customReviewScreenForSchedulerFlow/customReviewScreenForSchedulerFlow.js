@@ -16,9 +16,12 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
     @api workTypeGroupId;
     @api serviceResourceIds;
     @api showMap;
+    @api showServiceResources;
+    @api isSlotChanged;
 
     @track items = [];
-    @track workTypeGroupLabel;
+    @track serviceResourceItems = [];
+    @track scheduledTimes = [];
     fieldApiNames = [];
     excludedFieldsArr = [];
 
@@ -54,16 +57,21 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         // Exclude Address fields for displaying
         this.excludedFieldsArr.push('Street', 'City', 'State', 'PostalCode', 'Country');
 
-        // Unnecessary Field for Output
-        this.excludedFieldsArr.push('EngagementChannelTypeId');
+        // Get WorkTypeGroupId record value, and label name
+        if(typeof(this.workTypeGroupId) !== 'undefined') {
+            if(!this.excludedFieldsArr.includes('workTypeGroupId')) {
+                // add workTypeGroupId to display items
+                this.getRecordLabelAndValueByRecordId('workTypeGroupId', this.workTypeGroupId, this.items);
+            }
+        }
 
         for(let key in this.serviceAppointmentRecord) {
             // Exclude the fields specified from a flow
             if(!this.excludedFieldsArr.includes(key)) {
                 let value = this.serviceAppointmentRecord[key];
-                // If value is ID type data, get a value by RecordId
-                if (this.checkValueIsIdType(value)) {
-                    this.getRecordNameByRecordId(key, value);
+                // If value is ID type data, get a label and value by RecordId
+                if (this.IsValueIdType(value)) {
+                    this.getRecordLabelAndValueByRecordId(key, value, this.items);
                 } else {
                     // If value is DateTime, convert it to fomatted date time
                     if (DATE_PATTERN_REGEX.test(value) & !isNaN(Date.parse(value))) {
@@ -74,43 +82,48 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
                 }
             }
         }
-        // Get Service Appointment Field Label
-        this.updateFieldLabels('ServiceAppointment');
+        // Get Service Appointment Fields Label
+        this.getAllFieldsLabel('ServiceAppointment', this.fieldApiNames, this.items);
     }
 
-    // Get the field labels
-    async updateFieldLabels(objectApiName) {
+    // Get Record label and value by recordId
+    async getRecordLabelAndValueByRecordId(key, recordId, displayItems) {
         try {
-            const result = await getFieldLabels({ objectApiName: objectApiName, fieldApiNames: this.fieldApiNames });
-            console.log('result - ' + JSON.stringify(result));
-            for (let item of this.items) {
+            const result = await getRecordName({recordId: recordId});
+            console.log('result - Apex getRecordName : ' + JSON.stringify(result));
+            let fieldName = Object.keys(result)[0];
+            let value = Object.values(result)[0];
+            displayItems.push({apiName: key, value: value, name: fieldName});
+        } catch(e) {
+            console.error(e);
+        }
+    }
+
+    // Get field labels for specified object
+    async getAllFieldsLabel(objectApiName, fieldApiNames, displayItems) {
+        try {
+            const result = await getFieldLabels({ objectApiName: objectApiName, fieldApiNames: fieldApiNames });
+            console.log('result Apex getFieldLabels - ' + JSON.stringify(result));
+            for (let item of displayItems) {
                 if(item.name === '') {
                     item.name = result[item.apiName];
                 }
             }
-            console.log('this item - ' + JSON.stringify(this.items));
+            console.log('displaying items - ' + JSON.stringify(displayItems));
+            if(objectApiName === 'ServiceAppointment') {
+                this.separateScheduledFields();
+            }
         } catch(e) {
             console.error(e);
         }
     }
 
-    // Get Record Name by recordId
-    async getRecordNameByRecordId(key, recordId) {
-        try {
-            const result = await getRecordName({recordId: recordId});
-            console.log('result - with recordName : ' + JSON.stringify(result));
-            let fieldName = Object.keys(result)[0];
-            let value = Object.values(result)[0];
-            this.items.push({apiName: key, value: value, name: fieldName});
-        } catch(e) {
-            console.error(e);
-        }
-    }
-
-    checkValueIsIdType(value) {
+    // Check if a value is ID Type
+    IsValueIdType(value) {
         return ID_TYPE_REGEX.test(value);
     }
 
+    // Format UTC datetime to specified datetime value
     formatUTCDateTime(value) {
         let utcDate = new Date(value);
         let formatter = new Intl.DateTimeFormat(LANG, {
@@ -127,8 +140,29 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         return formattedValue;
     }
 
+    // Separate SchedStartTime and SchedEndTime from Display Items
+    separateScheduledFields() {
+        let schedStartTimeItem = this.items.find(item => item.apiName === 'SchedStartTime');
+        let schedEndTimeItem = this.items.find(item => item.apiName === 'SchedEndTime');
+        
+        if (schedStartTimeItem && schedEndTimeItem) {
+            this.scheduledTimes.push({apiName: 'SchedStartTime', value: schedStartTimeItem.value, name: schedStartTimeItem.name});
+            this.scheduledTimes.push({apiName: 'SchedEndTime', value: schedEndTimeItem.value, name: schedEndTimeItem.name});
+        
+            this.items = this.items.filter(item => item.apiName !== 'SchedStartTime' && item.apiName !== 'SchedEndTime');
+        }
+    }
+
+
+    // Output to Flow
     @api
     get outputJson() {
-        return JSON.stringify(this.serviceAppointmentRecord);
+        let outputObj = this.serviceAppointmentRecord;
+        // // Add WorkTypeGroupId
+        // outputObj['WorkTypeGroupId'] = this.workTypeGroupId;
+        // // Add isSlotChanged
+        // outputObj['IsSlotChanged'] = typeof this.isSlotChanged === 'undefined' ? false : this.isSlotChanged;
+        // delete outputObj['EngagementChannelTypeId'];
+        return JSON.stringify(outputObj);
     }
 }

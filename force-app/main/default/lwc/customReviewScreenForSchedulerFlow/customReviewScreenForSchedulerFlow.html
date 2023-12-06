@@ -3,6 +3,23 @@
         <h2>{LABELS.reviewScreenTitle}</h2>
     </div>
     <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_xx-small slds-text-color_default">
+        <span class="section-header-title slds-p-horizontal--small slds-truncate">{LABELS.schedTimeHeader}</span>
+    </h3>
+    <div class="slds-form slds-form_stacked">
+        <div class="slds-grid slds-wrap slds-gutters slds-p-horizontal_x-small slds-m-top_xx-small">
+            <template for:each={scheduledTimes} for:item="scheduledTime">
+                <div key={scheduledTime.apiName} class="slds-col slds-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">{scheduledTime.name}</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{scheduledTime.value}</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>        
+    <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_xx-small slds-text-color_default">
         <span class="section-header-title slds-p-horizontal--small slds-truncate">{LABELS.reviewScreenHeader}</span>
     </h3>
     <div class="slds-form slds-form_stacked">
