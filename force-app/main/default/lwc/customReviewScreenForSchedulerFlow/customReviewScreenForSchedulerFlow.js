@@ -197,7 +197,7 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
     @api
     get outputJson() {
         let outputObj = JSON.parse(JSON.stringify(this.serviceAppointmentRecord));
-        
+
         // Add WorkTypeGroupId
         outputObj.WorkTypeGroupId = this.workTypeGroupId;
         
@@ -207,7 +207,6 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         // Add ServiceResourceId
         let serviceResourceId = JSON.parse(this.serviceResources).filter(obj => obj.AttendanceType === 'Primary').map(obj => obj.Id);
         outputObj.ServiceResourceId = serviceResourceId[0];
-
 
         delete outputObj.EngagementChannelTypeId;
         console.log('output JSON : ' + JSON.stringify(outputObj));
