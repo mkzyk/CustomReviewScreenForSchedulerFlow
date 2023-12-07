@@ -16,4 +16,20 @@
         <name>Review_Screen_SchedTime_Header</name>
         <label>予定時間</label>
     </customLabels>
+    <customLabels>
+        <name>Review_Screen_ServiceResource_Header</name>
+        <label>サービスリソース</label>
+    </customLabels>
+    <customLabels>
+        <name>Review_Screen_ServiceResource_Column_Primary</name>
+        <label>主担当サービスリソース</label>
+    </customLabels>
+    <customLabels>
+        <name>Review_Screen_ServiceResource_Column_Required</name>
+        <label>必須サービスリソース</label>
+    </customLabels>
+    <customLabels>
+        <name>Review_Screen_ServiceResource_Column_Optional</name>
+        <label>任意サービスリソース</label>
+    </customLabels>
 </Translations>

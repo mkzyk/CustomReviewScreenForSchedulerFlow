@@ -2,6 +2,23 @@
     <div class="slds-text-heading_large slds-text-align_center slds-m-vertical_small slds-text-color_default">
         <h2>{LABELS.reviewScreenTitle}</h2>
     </div>
+    <h3 if:true={showServiceResources} class="slds-section__title slds-theme_shade slds-p-horizontal_xx-small slds-text-color_default">
+        <span class="section-header-title slds-p-horizontal--small slds-truncate">{LABELS.reviewScreenServiceResourceHeader}</span>
+    </h3>
+    <div if:true={showServiceResources} class="slds-form slds-form_stacked">
+        <div class="slds-grid slds-wrap slds-gutters slds-p-horizontal_x-small slds-m-top_xx-small">
+            <template for:each={serviceResourceItems} for:item="serviceResourceItem">
+                <div key={serviceResourceItem.label} class="slds-col slds-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">{serviceResourceItem.label}</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{serviceResourceItem.name}</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div> 
     <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_xx-small slds-text-color_default">
         <span class="section-header-title slds-p-horizontal--small slds-truncate">{LABELS.schedTimeHeader}</span>
     </h3>

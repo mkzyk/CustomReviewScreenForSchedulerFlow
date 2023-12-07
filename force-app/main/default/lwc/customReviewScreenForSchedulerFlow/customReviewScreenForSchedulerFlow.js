@@ -14,14 +14,15 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
     @api serviceAppointmentRecord;
     @api excludedFields;
     @api workTypeGroupId;
-    @api serviceResourceIds;
+    @api serviceResources;
     @api showMap;
     @api showServiceResources;
     @api isSlotChanged;
 
     @track items = [];
-    @track serviceResourceItems = [];
     @track scheduledTimes = [];
+    @track serviceResourceItems = [];
+
     fieldApiNames = [];
     excludedFieldsArr = [];
 
@@ -84,6 +85,15 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         }
         // Get Service Appointment Fields Label
         this.getAllFieldsLabel('ServiceAppointment', this.fieldApiNames, this.items);
+
+        // Set Service Resource Display items
+        if(typeof(this.showServiceResources) !== 'undefined') {
+            if(this.showServiceResources) {
+                this.setServiceResourceData();
+            }
+        } else {
+            this.showServiceResources = false;
+        }
     }
 
     // Get Record label and value by recordId
@@ -153,16 +163,54 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         }
     }
 
+    // Set Service Resource Displaying Item
+    setServiceResourceData() {
+        let requiredResources = [];
+        let optionalResources = [];
+        let serviceResourcesObj = JSON.parse(this.serviceResources);
+
+        for(let item of serviceResourcesObj) {
+
+            if(item['AttendanceType'] === 'Primary') {
+                this.serviceResourceItems.push({label: this.LABELS.reviewScreenServiceResourceColumnPrimary, name: item['Name']});
+            } else if(item['AttendanceType'] === 'Required') {
+                requiredResources.push(item['Name']);
+            } else if(item['AttendanceType'] === 'Optional') {
+                optionalResources.push(item['Name']);
+            }
+        }
+
+        let requiredResourceNames = requiredResources.join(', ');
+        let optionalResourceNames = optionalResources.join(', ');
+
+        if(requiredResourceNames.length !== 0) {
+            this.serviceResourceItems.push({label: this.LABELS.reviewScreenServiceResourceColumnRequired, name: requiredResourceNames});
+        }
+        if(optionalResourceNames.length !== 0) {
+            this.serviceResourceItems.push({label: this.LABELS.reviewScreenServiceResourceColumnOptional, name: optionalResourceNames});
+        }
+        console.log('serviceResourceItems : ' + JSON.stringify(this.serviceResourceItems));
+    }
+
 
     // Output to Flow
     @api
     get outputJson() {
-        let outputObj = this.serviceAppointmentRecord;
-        // // Add WorkTypeGroupId
-        // outputObj['WorkTypeGroupId'] = this.workTypeGroupId;
-        // // Add isSlotChanged
-        // outputObj['IsSlotChanged'] = typeof this.isSlotChanged === 'undefined' ? false : this.isSlotChanged;
-        // delete outputObj['EngagementChannelTypeId'];
+        let outputObj = JSON.parse(JSON.stringify(this.serviceAppointmentRecord));
+        
+        // Add WorkTypeGroupId
+        outputObj.WorkTypeGroupId = this.workTypeGroupId;
+        
+        // Add isSlotChanged
+        outputObj.IsSlotChanged = typeof this.isSlotChanged === 'undefined' ? false : this.isSlotChanged;
+
+        // Add ServiceResourceId
+        let serviceResourceId = JSON.parse(this.serviceResources).filter(obj => obj.AttendanceType === 'Primary').map(obj => obj.Id);
+        outputObj.ServiceResourceId = serviceResourceId[0];
+
+
+        delete outputObj.EngagementChannelTypeId;
+        console.log('output JSON : ' + JSON.stringify(outputObj));
         return JSON.stringify(outputObj);
     }
 }
