@@ -12,5 +12,4 @@ System.debug(tmp);
 //String label = Schema.getGlobalDescribe().get(objectName).fields.getMap().get('Name').getDescribe().getLabel();
 System.debug(label);
 
-String obj = 'Account';
-SELECT Id FROM :=obj
+
