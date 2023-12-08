@@ -10,9 +10,9 @@
             <template for:each={serviceResourceItems} for:item="serviceResourceItem">
                 <div key={serviceResourceItem.label} class="slds-col slds-size_1-of-2 slds-m-bottom_medium">
                     <div class="slds-form-element slds-form-element_readonly">
-                        <span class="slds-form-element__label">{serviceResourceItem.label}</span>
+                        <span class="slds-form-element__label">{serviceResourceItem.name}</span>
                         <div class="slds-form-element__control">
-                            <span class="slds-form-element__static">{serviceResourceItem.name}</span>
+                            <span class="slds-form-element__static">{serviceResourceItem.value}</span>
                         </div>
                     </div>
                 </div>
@@ -81,4 +81,21 @@
             </div>
         </div>
     </div>
+    <h3 if:true={leadRecord} class="slds-section__title slds-theme_shade slds-p-horizontal_xx-small slds-text-color_default">
+        <span class="section-header-title slds-p-horizontal--small slds-truncate">{LABELS.reviewScreenLeadInput}</span>
+    </h3>
+    <div if:true={leadRecord} class="slds-form slds-form_stacked">
+        <div class="slds-grid slds-wrap slds-gutters slds-p-horizontal_x-small slds-m-top_xx-small">
+            <template for:each={leadItems} for:item="leadItem">
+                <div key={leadItem.apiName} class="slds-col slds-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">{leadItem.name}</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{leadItem.value}</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div> 
 </template>

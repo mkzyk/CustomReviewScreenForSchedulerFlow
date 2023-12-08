@@ -16,7 +16,9 @@
             <property name="showServiceResources" label="Show Service Resources" type="Boolean" role="inputOnly" description="Show Service Resources Info. Set {!$GlobalConstant.True} or false. Default is false."/>
             <property name="showMap" label="Show Map" type="Boolean" role="inputOnly" description="Show map by address. Set {!$GlobalConstant.True} or false. Deafault is false."/>
             <property name="isSlotChanged" label="Is Modified Appointment?" type="Boolean" role="inputOnly" required="true" description="Set {!$GlobalConstant.False} for New Appointment."/>
-            <property name="outputJson" label="Output JSON" type="String" role="outputOnly" />
+            <property name="leadRecord" label="Lead Record" type="@salesforce/schema/ServiceAppointment" role="inputOnly" description="Set {!Lead} if this appointment is for Guest Booking"/>
+            <property name="outputServiceAppointmentField" label="Output Serivce Appointment Field" type="String" role="outputOnly" />
+            <property name="outputLeadRecord" label="Output Lead Record" type="@salesforce/schema/Lead" role="outputOnly" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
