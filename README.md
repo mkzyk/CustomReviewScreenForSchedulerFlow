@@ -14,7 +14,7 @@
 ## Configuration
 1. Open your Scheduler flow.
 2. Open `Review Screen` Element.
-3. Place `Custom Review Screen For Schduler Flow` and delete standard component `Review Inbound or Outbound Service Appointment`.
+3. Place `Custom Review Screen For Scheduler Flow` and delete standard component `Review Inbound or Outbound Service Appointment`.
 4. Set these input field.  
 
 | Input Fields               | Description                                                                                                                                                                           | Required |
