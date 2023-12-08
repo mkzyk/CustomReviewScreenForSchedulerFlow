@@ -3,7 +3,6 @@
 	<types>
 		<members>FieldLabelController</members>
 		<members>FieldLabelControllerTest</members>
-		<members>GetRecordId</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
