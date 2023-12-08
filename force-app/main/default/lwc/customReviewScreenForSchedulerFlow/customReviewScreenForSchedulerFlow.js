@@ -245,9 +245,4 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         console.log('output JSON : ' + JSON.stringify(outputObj));
         return JSON.stringify(outputObj);
     }
-
-    @api
-    get outputLeadRecord() {
-
-    }
 }

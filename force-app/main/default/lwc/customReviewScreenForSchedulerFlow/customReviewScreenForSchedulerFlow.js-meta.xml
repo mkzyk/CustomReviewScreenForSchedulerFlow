@@ -18,7 +18,6 @@
             <property name="isSlotChanged" label="Is Modified Appointment?" type="Boolean" role="inputOnly" required="true" description="Set {!$GlobalConstant.False} for New Appointment."/>
             <property name="leadRecord" label="Lead Record" type="@salesforce/schema/ServiceAppointment" role="inputOnly" description="Set {!Lead} if this appointment is for Guest Booking"/>
             <property name="outputServiceAppointmentField" label="Output Serivce Appointment Field" type="String" role="outputOnly" />
-            <property name="outputLeadRecord" label="Output Lead Record" type="@salesforce/schema/Lead" role="outputOnly" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

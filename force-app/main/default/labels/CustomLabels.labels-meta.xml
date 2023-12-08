@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Address_Column_Name</fullName>
+        <categories>customReviewScreenForSchedulerFlow</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Address Column Name</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>Review_Screen_Header</fullName>
+        <categories>customReviewScreenForSchedulerFlow</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Review Screen Header</shortDescription>
+        <value>Your Appointment Details</value>
+    </labels>
+    <labels>
+        <fullName>Review_Screen_SchedTime_Header</fullName>
+        <categories>customReviewScreenForSchedulerFlow</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Review Screen SchedTime Header</shortDescription>
+        <value>Your Scheduled Time</value>
+    </labels>
+    <labels>
+        <fullName>Review_Screen_ServiceResource_Column_Optional</fullName>
+        <categories>customReviewScreenForSchedulerFlow</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Review Screen ServiceResource Column Optional</shortDescription>
+        <value>Optional Service Resource</value>
+    </labels>
+    <labels>
+        <fullName>Review_Screen_ServiceResource_Column_Primary</fullName>
+        <categories>customReviewScreenForSchedulerFlow</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Review Screen ServiceResource Column Primary</shortDescription>
+        <value>Primary Service Resource</value>
+    </labels>
+    <labels>
+        <fullName>Review_Screen_ServiceResource_Column_Required</fullName>
+        <categories>customReviewScreenForSchedulerFlow</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Review Screen ServiceResource Column Required</shortDescription>
+        <value>Required Service Resource</value>
+    </labels>
+    <labels>
+        <fullName>Review_Screen_ServiceResource_Header</fullName>
+        <categories>customReviewScreenForSchedulerFlow</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Review Screen Service Resource Header</shortDescription>
+        <value>Service Resource</value>
+    </labels>
+    <labels>
+        <fullName>Review_Screen_Title</fullName>
+        <categories>customReviewScreenForSchedulerFlow</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Review Screen Title</shortDescription>
+        <value>Review Your Service Appointment</value>
+    </labels>
+</CustomLabels>
