@@ -12,7 +12,7 @@
             <property name="serviceAppointmentRecord" label="Service Appointment Record" type="@salesforce/schema/ServiceAppointment" role="inputOnly" required="true" description="Set {!ServiceAppointment} variable from Flow"/>
             <property name="excludedFields" label="Excluded Fields" type="String" role="inputOnly" description="Excluded Field for Review Screen. Input API name separated comma without space i.e. Comments,AdditionalInformation,IsAnonymousBooking,EngagementChannelTypeId"/>
             <property name="workTypeGroupId" label="Work Type Group Id" type="String" role="inputOnly" required="true" description="Set {!workTypeGroupId} variable from Flow"/>
-            <property name="serviceResources" label="Service Resources Variable" type="String" role="inputOnly" required="true" description="Set {!serviceResources} variable from Flow"/>
+            <property name="serviceResources" label="Service Resources Variable" type="String" role="inputOnly" required="true" description="Set {!serviceResources} variable if Multiresource is enabled, if not, set {!ServiceResourceId} from Flow"/>
             <property name="showServiceResources" label="Show Service Resources" type="Boolean" role="inputOnly" description="Show Service Resources Info. Set {!$GlobalConstant.True} or false. Default is false."/>
             <property name="showMap" label="Show Map" type="Boolean" role="inputOnly" description="Show map by address. Set {!$GlobalConstant.True} or false. Deafault is false."/>
             <property name="isSlotChanged" label="Is Modified Appointment?" type="Boolean" role="inputOnly" required="true" description="Set {!$GlobalConstant.False} for New Appointment."/>

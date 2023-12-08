@@ -205,8 +205,14 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         outputObj.IsSlotChanged = typeof this.isSlotChanged === 'undefined' ? false : this.isSlotChanged;
 
         // Add ServiceResourceId
-        let serviceResourceId = JSON.parse(this.serviceResources).filter(obj => obj.AttendanceType === 'Primary').map(obj => obj.Id);
-        outputObj.ServiceResourceId = serviceResourceId[0];
+        // When Multi Recourse is not enabled
+        if(this.IsValueIdType(this.serviceResources)) {
+            outputObj.ServiceResourceId = this.serviceResources;
+        } else {
+            // When Multi Recourse is enabled
+            let serviceResourceId = JSON.parse(this.serviceResources).filter(obj => obj.AttendanceType === 'Primary').map(obj => obj.Id);
+            outputObj.ServiceResourceId = serviceResourceId[0];
+        }
 
         delete outputObj.EngagementChannelTypeId;
         console.log('output JSON : ' + JSON.stringify(outputObj));
