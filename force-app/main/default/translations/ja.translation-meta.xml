@@ -32,4 +32,8 @@
         <name>Review_Screen_ServiceResource_Column_Optional</name>
         <label>任意サービスリソース</label>
     </customLabels>
+    <customLabels>
+        <name>Review_Screen_Lead_Input</name>
+        <label>お客様情報</label>
+    </customLabels>
 </Translations>

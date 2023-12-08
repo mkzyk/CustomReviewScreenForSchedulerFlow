@@ -18,12 +18,15 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
     @api showMap;
     @api showServiceResources;
     @api isSlotChanged;
+    @api leadRecord;
 
     @track items = [];
     @track scheduledTimes = [];
     @track serviceResourceItems = [];
+    @track leadItems = [];
 
-    fieldApiNames = [];
+    fieldApiNamesSA = [];
+    fieldApiNamesLead = [];
     excludedFieldsArr = [];
 
     LABELS = customLabels;
@@ -47,8 +50,9 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         return typeof this.showMap === 'undefined' ? false : this.showMap;
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         console.log('Input Service Appointment : ' + JSON.stringify(this.serviceAppointmentRecord));
+        let promises = [];
         
         if(typeof(this.excludedFields) !== 'undefined') {
             this.excludedFieldsArr = this.excludedFields.split(',');
@@ -62,7 +66,7 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         if(typeof(this.workTypeGroupId) !== 'undefined') {
             if(!this.excludedFieldsArr.includes('workTypeGroupId')) {
                 // add workTypeGroupId to display items
-                this.getRecordLabelAndValueByRecordId('workTypeGroupId', this.workTypeGroupId, this.items);
+                promises.push(this.getRecordLabelAndValueByRecordId('workTypeGroupId', this.workTypeGroupId, this.items));
             }
         }
 
@@ -72,28 +76,51 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
                 let value = this.serviceAppointmentRecord[key];
                 // If value is ID type data, get a label and value by RecordId
                 if (this.IsValueIdType(value)) {
-                    this.getRecordLabelAndValueByRecordId(key, value, this.items);
+                    promises.push(this.getRecordLabelAndValueByRecordId(key, value, this.items));
                 } else {
                     // If value is DateTime, convert it to fomatted date time
                     if (DATE_PATTERN_REGEX.test(value) & !isNaN(Date.parse(value))) {
                         value = this.formatUTCDateTime(value);
                     }
                     this.items.push({apiName: key, value: value, name: ''});
-                    this.fieldApiNames.push(key);
+                    this.fieldApiNamesSA.push(key);
                 }
             }
         }
-        // Get Service Appointment Fields Label
-        this.getAllFieldsLabel('ServiceAppointment', this.fieldApiNames, this.items);
 
         // Set Service Resource Display items
         if(typeof(this.showServiceResources) !== 'undefined') {
             if(this.showServiceResources) {
-                this.setServiceResourceData();
+                if(this.IsValueIdType(this.serviceResources)) {
+                    promises.push(this.getRecordLabelAndValueByRecordId('PrimaryServiceResource', this.serviceResources, this.serviceResourceItems));
+                } else {
+                    this.setServiceResourceData();
+                }
             }
         } else {
             this.showServiceResources = false;
         }
+
+        // Get Lead record field api names
+        if(typeof(this.leadRecord) !== 'undefined') {
+            for(let key in this.leadRecord) {
+                this.leadItems.push({apiName: key, value: value, name: ''});
+                this.fieldApiNamesLead.push(key);
+            }
+        }
+
+        try {
+            // Need to render all Ids values are set in displaying items
+            await Promise.all(promises);
+            // Get Service Appointment Fields Label
+            this.getAllFieldsLabel('ServiceAppointment', this.fieldApiNamesSA, this.items);
+            if(this.fieldApiNamesLead.length !== 0) {
+                this.getAllFieldsLabel('Lead', this.fieldApiNamesLead, this.leadItems);
+            }
+        } catch(e) {
+            console.error(e);
+        }
+
     }
 
     // Get Record label and value by recordId
@@ -172,7 +199,7 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         for(let item of serviceResourcesObj) {
 
             if(item['AttendanceType'] === 'Primary') {
-                this.serviceResourceItems.push({label: this.LABELS.reviewScreenServiceResourceColumnPrimary, name: item['Name']});
+                this.serviceResourceItems.push({name: this.LABELS.reviewScreenServiceResourceColumnPrimary, value: item['Name']});
             } else if(item['AttendanceType'] === 'Required') {
                 requiredResources.push(item['Name']);
             } else if(item['AttendanceType'] === 'Optional') {
@@ -184,10 +211,10 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         let optionalResourceNames = optionalResources.join(', ');
 
         if(requiredResourceNames.length !== 0) {
-            this.serviceResourceItems.push({label: this.LABELS.reviewScreenServiceResourceColumnRequired, name: requiredResourceNames});
+            this.serviceResourceItems.push({name: this.LABELS.reviewScreenServiceResourceColumnRequired, value: requiredResourceNames});
         }
         if(optionalResourceNames.length !== 0) {
-            this.serviceResourceItems.push({label: this.LABELS.reviewScreenServiceResourceColumnOptional, name: optionalResourceNames});
+            this.serviceResourceItems.push({name: this.LABELS.reviewScreenServiceResourceColumnOptional, value: optionalResourceNames});
         }
         console.log('serviceResourceItems : ' + JSON.stringify(this.serviceResourceItems));
     }
@@ -195,7 +222,7 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
 
     // Output to Flow
     @api
-    get outputJson() {
+    get outputServiceAppointmentField() {
         let outputObj = JSON.parse(JSON.stringify(this.serviceAppointmentRecord));
 
         // Add WorkTypeGroupId
@@ -205,8 +232,14 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         outputObj.IsSlotChanged = typeof this.isSlotChanged === 'undefined' ? false : this.isSlotChanged;
 
         // Add ServiceResourceId
-        let serviceResourceId = JSON.parse(this.serviceResources).filter(obj => obj.AttendanceType === 'Primary').map(obj => obj.Id);
-        outputObj.ServiceResourceId = serviceResourceId[0];
+        // When Multi Recourse is not enabled
+        if(this.IsValueIdType(this.serviceResources)) {
+            outputObj.ServiceResourceId = this.serviceResources;
+        } else {
+            // When Multi Recourse is enabled
+            let serviceResourceId = JSON.parse(this.serviceResources).filter(obj => obj.AttendanceType === 'Primary').map(obj => obj.Id);
+            outputObj.ServiceResourceId = serviceResourceId[0];
+        }
 
         delete outputObj.EngagementChannelTypeId;
         console.log('output JSON : ' + JSON.stringify(outputObj));

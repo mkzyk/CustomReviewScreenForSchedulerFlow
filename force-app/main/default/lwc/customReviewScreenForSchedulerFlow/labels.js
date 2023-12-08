@@ -6,6 +6,7 @@ import reviewScreenServiceResourceHeader from '@salesforce/label/c.Review_Screen
 import reviewScreenServiceResourceColumnPrimary from '@salesforce/label/c.Review_Screen_ServiceResource_Column_Primary';
 import reviewScreenServiceResourceColumnRequired from '@salesforce/label/c.Review_Screen_ServiceResource_Column_Required';
 import reviewScreenServiceResourceColumnOptional from '@salesforce/label/c.Review_Screen_ServiceResource_Column_Optional';
+import reviewScreenLeadInput from '@salesforce/label/c.Review_Screen_Lead_Input';
 
 const customLabels = {
     reviewScreenTitle,
@@ -16,6 +17,7 @@ const customLabels = {
     reviewScreenServiceResourceColumnPrimary,
     reviewScreenServiceResourceColumnRequired,
     reviewScreenServiceResourceColumnOptional,
+    reviewScreenLeadInput,
 };
 
 export default customLabels;
