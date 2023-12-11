@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customLabels>
-        <name>Review_Screen_Title</name>
-        <label>予約確認画面</label>
-    </customLabels>
-    <customLabels>
-        <name>Review_Screen_Header</name>
-        <label>予約情報詳細</label>
-    </customLabels>
-    <customLabels>
-        <name>Address_Column_Name</name>
         <label>住所</label>
+        <name>Address_Column_Name</name>
     </customLabels>
     <customLabels>
-        <name>Review_Screen_SchedTime_Header</name>
-        <label>予定時間</label>
+        <label>予約情報詳細</label>
+        <name>Review_Screen_Header</name>
     </customLabels>
     <customLabels>
-        <name>Review_Screen_ServiceResource_Header</name>
-        <label>サービスリソース</label>
-    </customLabels>
-    <customLabels>
-        <name>Review_Screen_ServiceResource_Column_Primary</name>
-        <label>主担当サービスリソース</label>
-    </customLabels>
-    <customLabels>
-        <name>Review_Screen_ServiceResource_Column_Required</name>
-        <label>必須サービスリソース</label>
-    </customLabels>
-    <customLabels>
-        <name>Review_Screen_ServiceResource_Column_Optional</name>
-        <label>任意サービスリソース</label>
-    </customLabels>
-    <customLabels>
-        <name>Review_Screen_Lead_Input</name>
         <label>お客様情報</label>
+        <name>Review_Screen_Lead_Input</name>
+    </customLabels>
+    <customLabels>
+        <label>予定時間</label>
+        <name>Review_Screen_SchedTime_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>任意サービスリソース</label>
+        <name>Review_Screen_ServiceResource_Column_Optional</name>
+    </customLabels>
+    <customLabels>
+        <label>主担当サービスリソース</label>
+        <name>Review_Screen_ServiceResource_Column_Primary</name>
+    </customLabels>
+    <customLabels>
+        <label>必須サービスリソース</label>
+        <name>Review_Screen_ServiceResource_Column_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスリソース</label>
+        <name>Review_Screen_ServiceResource_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>予約確認画面</label>
+        <name>Review_Screen_Title</name>
     </customLabels>
 </Translations>
