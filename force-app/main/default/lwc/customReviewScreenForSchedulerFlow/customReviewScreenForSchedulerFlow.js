@@ -70,6 +70,15 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
             }
         }
 
+        // Get Lead record field api names
+        if(typeof(this.leadRecord) !== 'undefined') {
+            for(let key in this.leadRecord) {
+                this.leadItems.push({apiName: key, value: this.leadRecord[key], name: ''});
+                this.fieldApiNamesLead.push(key);
+            }
+            this.excludedFieldsArr.push('ParentRecordId');
+        }
+
         for(let key in this.serviceAppointmentRecord) {
             // Exclude the fields specified from a flow
             if(!this.excludedFieldsArr.includes(key)) {
@@ -91,6 +100,7 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         // Set Service Resource Display items
         if(typeof(this.showServiceResources) !== 'undefined') {
             if(this.showServiceResources) {
+                // if multi resource is not enabled, jsut get Primary resouce label and name by recordId
                 if(this.IsValueIdType(this.serviceResources)) {
                     promises.push(this.getRecordLabelAndValueByRecordId('PrimaryServiceResource', this.serviceResources, this.serviceResourceItems));
                 } else {
@@ -101,20 +111,13 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
             this.showServiceResources = false;
         }
 
-        // Get Lead record field api names
-        if(typeof(this.leadRecord) !== 'undefined') {
-            for(let key in this.leadRecord) {
-                this.leadItems.push({apiName: key, value: value, name: ''});
-                this.fieldApiNamesLead.push(key);
-            }
-        }
-
         try {
             // Need to render all Ids values are set in displaying items
             await Promise.all(promises);
             // Get Service Appointment Fields Label
             this.getAllFieldsLabel('ServiceAppointment', this.fieldApiNamesSA, this.items);
             if(this.fieldApiNamesLead.length !== 0) {
+                // Get Lead fields for Guest Appointment
                 this.getAllFieldsLabel('Lead', this.fieldApiNamesLead, this.leadItems);
             }
         } catch(e) {
@@ -242,6 +245,12 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         }
 
         delete outputObj.EngagementChannelTypeId;
+
+        // Delete ParentRecordId if this appointment is Guest Inbound Appointment
+        if(typeof(this.leadRecord) !== 'undefined') {
+            delete outputObj.ParentRecordId;
+        }
+
         console.log('output JSON : ' + JSON.stringify(outputObj));
         return JSON.stringify(outputObj);
     }

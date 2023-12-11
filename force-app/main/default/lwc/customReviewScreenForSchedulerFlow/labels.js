@@ -21,4 +21,3 @@ const customLabels = {
 };
 
 export default customLabels;
-
