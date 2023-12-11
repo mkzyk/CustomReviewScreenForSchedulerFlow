@@ -1,4 +1,5 @@
 # Custom Review Screen For Salesforce Scheduler Flow
+Push the button below to install this package.  
 <div>
     <a href="https://githubsfdeploy.herokuapp.com?owner=mkzyk&repo=CustomReviewScreenForSchedulerFlow">
         <img alt="Deploy to Salesforce"
@@ -6,14 +7,16 @@
     </a>
 </div>
     
-<img width="70%" alt="image" src="https://github.com/mkzyk/CustomReviewScreenForSchedulerFlow/assets/20549208/f7bbb179-2535-4456-bed2-e94fb1d2f84a">
+## Images
+<img width="70%" alt="image" src="https://github.com/mkzyk/CustomReviewScreenForSchedulerFlow/assets/20549208/0b92f5a0-56be-437c-b2c1-9ab3d53d48e9">
 
 
-## Requirements
+
+## You may have these requirements...
 - You don't want to develop all the pages and you would like to utilize standard Salesforce Scheduler functionality.  
 - The end-users input some value before making an appointment and save the value to the Service Appointment custom field.  
-- The Review Screen must be pre-populated with the value of a custom field from a Service Appointment.
-- There are some fields you want to delete that are not allowed in standard component.
+- The Review Screen must be pre-populated with the value of a custom field from Service Appointment.
+- There are some fields you want to remove on Review Screen that are not allowed in standard component.
 
 ## Configuration
 1. Open your Scheduler flow.
