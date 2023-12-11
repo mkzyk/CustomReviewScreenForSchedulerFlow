@@ -60,7 +60,7 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         }
 
         // Exclude Address fields for displaying
-        this.excludedFieldsArr.push('Street', 'City', 'State', 'PostalCode', 'Country');
+        this.excludedFieldsArr.push('Street', 'City', 'State', 'PostalCode', 'Country', 'Address');
 
         // Get WorkTypeGroupId record value, and label name
         if(typeof(this.workTypeGroupId) !== 'undefined') {
