@@ -8,7 +8,11 @@ Push the button below to install this package.
 </div>
     
 ## Images
-<img width="70%" alt="image" src="https://github.com/mkzyk/CustomReviewScreenForSchedulerFlow/assets/20549208/0b92f5a0-56be-437c-b2c1-9ab3d53d48e9">
+In Org             |  In Experience Cloud
+:-------------------------:|:-------------------------:
+<img width="90%" alt="image" src="https://github.com/mkzyk/CustomReviewScreenForSchedulerFlow/assets/20549208/0b92f5a0-56be-437c-b2c1-9ab3d53d48e9">  |  <img width="75%" alt="image" src="https://github.com/mkzyk/CustomReviewScreenForSchedulerFlow/assets/20549208/f0482351-3bb3-47f6-957a-ec7cbc95f470">
+
+
 
 
 
