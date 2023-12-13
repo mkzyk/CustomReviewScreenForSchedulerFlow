@@ -52,10 +52,15 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
 
     async connectedCallback() {
         console.log('Input Service Appointment : ' + JSON.stringify(this.serviceAppointmentRecord));
+        if (this.serviceResources instanceof Object) {
+            console.log('Input Service Resource : ' + JSON.stringify(this.serviceResources));
+        } else {
+            console.log('Input Service Resource : ' + this.serviceResources);
+        }
         let promises = [];
         
         if(typeof(this.excludedFields) !== 'undefined') {
-            this.excludedFieldsArr = this.excludedFields.split(',');
+            this.excludedFieldsArr = this.excludedFields.replace(/\s/g, '').split(',');
             console.log('Input Excluded Fields : ' + this.excludedFieldsArr);
         }
 
@@ -232,7 +237,7 @@ export default class CustomReviewScreenForSchedulerFlow extends LightningElement
         outputObj.WorkTypeGroupId = this.workTypeGroupId;
         
         // Add isSlotChanged
-        outputObj.IsSlotChanged = typeof this.isSlotChanged === 'undefined' ? false : this.isSlotChanged;
+        outputObj.isSlotChanged = typeof this.isSlotChanged === 'undefined' ? false : this.isSlotChanged;
 
         // Add ServiceResourceId
         // When Multi Recourse is not enabled

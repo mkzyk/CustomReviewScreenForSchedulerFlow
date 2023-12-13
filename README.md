@@ -13,10 +13,11 @@ Push the button below to install this package.
 
 
 ## You may have these requirements...
-- You don't want to develop all the pages and you would like to utilize standard Salesforce Scheduler functionality.  
+- You don't want to develop all the pages and you would like to utilize standard Salesforce Scheduler flow functionality.  
 - The end-users input some value before making an appointment and save the value to the Service Appointment custom field.  
 - The Review Screen must be pre-populated with the value of a custom field from Service Appointment.
-- There are some fields you want to remove on Review Screen that are not allowed in standard component.
+- There are some fields you want to remove on Review Screen that are not allowed in standard component.  
+- You are experiencing some problems with Service Appointment Record page on Experience Cloud site because Service Appointment Page Layout is synced with Review page.  
 
 ## Configuration
 1. Open your Scheduler flow.
@@ -28,9 +29,9 @@ Push the button below to install this package.
 |----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
 | Is Modified Appointment?   | Set `{!$GlobalConstant.False}` for new appointment. Set True for modified appointment.                                                                                                  | True     |
 | Service Appointment Record | Set `{!ServiceAppointment}` record variable from your flow                                                                                                                              | True     |
-| Service Resources Variable | **COMPLICATED PART:** if `{disableMultiResource}` == False (Multi-Resource Scheduling is enabled), Set `{!serviceResources}` text variable from your flow. If  `{disableMultiResource}` == True ((Multi-Resource Scheduling is disabled)), Set `{!ServiceResourceId}.`                                                                                                                                | True     |
+| Service Resources Variable | **DON'T GET CONFUSED - This is a COMPLICATED PART:** if `{disableMultiResource}` == False (Multi-Resource Scheduling is enabled), Set `{!serviceResources}` text variable from your flow. If  `{disableMultiResource}` == True (Multi-Resource Scheduling is disabled), Set `{!ServiceResourceId}.` And please ensure that if annonymous booking is True, Set     `{!ServiceResourceId}.`                                                                                                                            | True     |
 | Work Type Group Id         | Set `{!workTypeGroupId}` text variable from your flow                                                                                                                                   | True     |
-| Lead                       | Set `{!Lead}` record variable from your flow, if this booking is Guest Inbound Appointment                                                                                                                                   |      |
+| Lead                       | Set `{!Lead}` record variable from your flow, if this booking is Guest User Inbound Appointment                                                                                                                                   |      |
 | Excluded Fields            | Set Field API Name separated comma without space. Specified fields are not displayed on Review Screen.  i.e. `Comments,AdditionalInformation,IsAnonymousBooking,EngagementChannelTypeId` |          |
 | Show Map                   | Whether displaying a map below address field. Default is false.   Set `{!$GlobalConstant.False}` or `{!$GlobalConstant.False}`.                                                             |          |
 | Show Service Resources     | Whether displaying Service Resource Info.   Set `{!$GlobalConstant.False}` or `{!$GlobalConstant.False}`.                                                                                   |          |
@@ -47,10 +48,11 @@ Any API name can be used.
 
 7. Save your flow and debug it, once you are satisfied with your result, make it Activate.
 
-**NOTES:** When you want to use this component on Guest Appointment, please create additional screen component to input Lead info.
+**NOTE1:** When you want to use this component on Guest Appointment, please create an additional screen to input Lead info.
      
 <img width="50%" alt="image" src="https://github.com/mkzyk/CustomReviewScreenForSchedulerFlow/assets/20549208/b6adf7b7-8d5d-4b89-9b4c-283d3faa33e5">  
     
 This component only displays `{!Lead}` record value from Flow input. Please understand that in this way, you can add another custom fields on Lead as well.  
 
+**NOTE2:** You can customize your field label name from Tab setting.  
 
