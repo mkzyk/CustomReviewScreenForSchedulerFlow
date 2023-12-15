@@ -51,6 +51,7 @@ Any API name can be used.
     <img width="50%" alt="image" src="https://github.com/mkzyk/CustomReviewScreenForSchedulerFlow/assets/20549208/de1de0d4-38c2-4c09-b5c6-0288b6d67c5c">  
 
 7. Save your flow and debug it, once you are satisfied with your result, make it Activate.
+8. Assign permission set "Custom Review Screen For Scheduler Flow" to desired user or just grant Apex Access `FieldLabelController` to desired user / profile.
 
 **NOTE1:** When you want to use this component on Guest Appointment, please create an additional screen to input Lead info.
      
