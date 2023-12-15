@@ -6,6 +6,8 @@ Push the button below to install this package.
         src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
     </a>
 </div>
+
+Unmanaged Package URL: https://login.salesforce.com/packaging/installPackage.apexp?p0=04tHn000001eXJfIAM
     
 ## Images
 In Org             |  In Experience Cloud
